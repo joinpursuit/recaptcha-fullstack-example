@@ -17,8 +17,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '../frontend-auth/build')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   secret: "NOT_A_GOOD_SECRET",
