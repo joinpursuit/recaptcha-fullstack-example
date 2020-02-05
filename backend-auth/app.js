@@ -31,8 +31,8 @@ app.use(passport.session())
 
 // Routes
 
-app.use('/users', usersRouter);
-app.use('/auth', authRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/auth', authRouter);
 
 console.log('__dirname', __dirname)
 
