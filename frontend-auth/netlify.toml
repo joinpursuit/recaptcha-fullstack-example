@@ -1,0 +1,7 @@
+[build.environment]
+  REACT_APP_API_URL = "https://user-auth-alejo.herokuapp.com"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
