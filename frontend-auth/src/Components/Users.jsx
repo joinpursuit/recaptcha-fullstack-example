@@ -13,7 +13,7 @@ class Users extends Component {
   async componentDidMount() {
     try {
       const API_URL = process.env.REACT_APP_API_URL;
-      let { data } = await axios.get(`/users`)
+      let { data } = await axios.get(`/api/users`)
       this.setState({
         users: data.payload
       })
