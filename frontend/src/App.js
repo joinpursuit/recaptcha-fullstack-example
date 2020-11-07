@@ -31,7 +31,6 @@ class App extends React.Component {
   checkUserLoggedIn = async () => {
     console.log('Checking if user logged in')
     try {
-      const API_URL = process.env.REACT_APP_API_URL;
       const { data } = await axios.get(`/api/auth/isUserLoggedIn`)
       this.setUser(data.payload)
     } catch (err) {
@@ -47,7 +46,6 @@ class App extends React.Component {
   logoutUser = async () => {
     console.log('logging out user')
     try {
-      const API_URL = process.env.REACT_APP_API_URL;
       await axios.get(`/api/auth/logout`)
       this.setState({
         user: null,

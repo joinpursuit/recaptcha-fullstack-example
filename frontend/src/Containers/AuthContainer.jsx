@@ -23,7 +23,6 @@ class AuthContainer extends Component {
     // then login user
     console.log('Signingup user')
     try {
-      const API_URL = process.env.REACT_APP_API_URL;
       await axios.post(`/api/auth/signup`, this.state)
       this.loginUser()
 
@@ -36,7 +35,6 @@ class AuthContainer extends Component {
     // Make network request to /auth/login to login user
     console.log('Logging user')
     try {
-      const API_URL = process.env.REACT_APP_API_URL;
       const { data } = await axios.post(`/api/auth/login`, this.state)
 
       const user = data.payload
