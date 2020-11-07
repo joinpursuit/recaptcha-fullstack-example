@@ -69,9 +69,9 @@ class App extends React.Component {
   render() {
     const { isUserLoggedIn, loadingUser } = this.state;
 
-    // if (loadingUser) { // If checking if user is authenticated has not completed display a loading animation otherwise render the app
-    //   return <div>loading...</div>
-    // }
+    if (loadingUser) { // If checking if user is authenticated has not completed display a loading animation otherwise render the app
+      return <div>loading...</div>
+    }
 
     return (
       <div className="App">
