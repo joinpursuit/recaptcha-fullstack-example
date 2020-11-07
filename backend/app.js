@@ -17,7 +17,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../frontend-auth/build')));
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
@@ -34,10 +34,8 @@ app.use(passport.session())
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 
-console.log('__dirname', __dirname)
-
 app.use('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../frontend-auth/build/index.html"))
+  res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"))
 })
 
 module.exports = app;
