@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd backend-auth && npm start",
+    "start": "cd server && npm start",
     "heroku-prebuild": "cd server && npm install && cd ../client && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
