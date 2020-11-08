@@ -5,7 +5,7 @@ const authHelpers = require('../auth/helpers')
 const passport = require('../auth/passport');
 
 
-router.post("/signup", async (req, res, next) => {
+router.post("/signup", authHelpers.verifyReCaptchaToken, async (req, res, next) => {
 
   try {
     const passwordDigest = await authHelpers.hashPassword(req.body.password)
@@ -38,7 +38,7 @@ router.post("/signup", async (req, res, next) => {
   }
 })
 
-router.post("/login", passport.authenticate('local'), (req, res, next) => {
+router.post("/login", authHelpers.verifyReCaptchaToken, passport.authenticate('local'), (req, res, next) => {
   res.json({
     payload: {
       user: req.user
