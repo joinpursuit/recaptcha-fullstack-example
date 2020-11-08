@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
+import ReCAPTCHA from 'react-google-recaptcha'
 import LoginForm from '../Components/LoginForm'
 import SignupForm from '../Components/SignupForm'
 import axios from 'axios';
@@ -7,7 +8,10 @@ import axios from 'axios';
 class AuthContainer extends Component {
   state = {
     username: '',
-    password: ''
+    password: '',
+    notBot: false,
+    recaptchaToken: ''
+
   }
 
   handleChange = (e) => {
@@ -19,23 +23,56 @@ class AuthContainer extends Component {
   }
 
   signupUser = async () => {
-    try {
-      const { data } = await axios.post(`/api/auth/signup`, this.state)
-      this.props.setUser(data.payload.user)
+    if (this.state.notBot) {
+      try {
+        const { data } = await axios.post(`/api/auth/signup`, this.state)
+        this.props.setUser(data.payload.user)
 
-    } catch (err) {
-      console.log('ERROR', err)
+      } catch (err) {
+        console.log('ERROR', err)
+      }
+    } else {
+      window.alert('Please verify you are not a bot.')
     }
   }
 
   loginUser = async () => {
-    try {
-      const { data } = await axios.post(`/api/auth/login`, this.state)
-      this.props.setUser(data.payload.user)
+    if (this.state.notBot) {
+      try {
+        const { data } = await axios.post(`/api/auth/login`, this.state)
+        this.props.setUser(data.payload.user)
 
-    } catch (err) {
-      console.log('ERROR', err)
+      } catch (err) {
+        console.log('ERROR', err)
+      }
+    } else {
+      window.alert('Please verify you are not a bot.')
     }
+  }
+
+  handleCaptcha = (token) => {
+    if (token) {
+      this.setState({
+        notBot: true,
+        recaptchaToken: token
+      })
+    } else {
+      // reCAPTCHA verification expired
+      this.setState({
+        notBot: false,
+        recaptchaToken: '',
+      })
+      window.alert('Human verification expired, please indicate you are not a robot again.')
+    }
+  }
+
+  handleCaptchaError = (err) => {
+    this.setState({
+      notBot: false,
+      recaptchaToken: '',
+    })
+
+    window.alert('There was an error. Please check your network and try again later.')
   }
 
   renderSignupForm = () => {
@@ -77,6 +114,11 @@ class AuthContainer extends Component {
               </Switch>
             )
         }
+        <ReCAPTCHA
+          sitekey="6LcSYeAZAAAAALzdZionBXYWYu_K7ZciZtsGSD0w"
+          onChange={this.handleCaptcha}
+          onErrored={this.handleCaptchaError}
+        />
       </div>
     )
   }
