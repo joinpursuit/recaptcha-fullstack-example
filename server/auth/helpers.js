@@ -20,7 +20,6 @@ const comparePasswords = async (candidatePassword, passwordDigest) => {
 }
 
 const loginRequired = (req, res, next) => {
-  console.log(req.session)
   if (req.user) return next()
   res.status(401).json({
     payload: null,

@@ -4,7 +4,6 @@ const { comparePasswords } = require('../auth/helpers');
 const usersQueries = require('../db/queries/users');
 
 passport.use(new LocalStrategy(async (username, password, done) => {
-  console.log('Authenticating user')
   try {
     const user = await usersQueries.getUserByUsername(username);
     if (!user) {
@@ -27,12 +26,10 @@ passport.use(new LocalStrategy(async (username, password, done) => {
 }))
 
 passport.serializeUser((user, done) => {
-  console.log('serializing user to session')
   done(null, user)
 })
 
 passport.deserializeUser(async (user, done) => {
-  console.log('deserializing user from session')
   try {
     let retrievedUser = await usersQueries.getUserByUsername(user.username)
     delete retrievedUser.password_digest;

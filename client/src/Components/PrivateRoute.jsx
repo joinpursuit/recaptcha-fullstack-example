@@ -6,7 +6,6 @@ const PrivateRoute = (props) => {
   const Component = props.component
   const otherPros = { ...props }
 
-  console.log('PrivateRoute')
   if (isUserLoggedIn) {
     return <Route {...otherPros} component={Component} />
   }

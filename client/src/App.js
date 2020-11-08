@@ -16,7 +16,6 @@ class App extends React.Component {
   }
 
   setUser = (user) => {
-    console.log('setting user to app state')
     this.setState({
       user: user,
       isUserLoggedIn: true, // Since the first thing we do on componentDidMount is to check if the user is logged in in our backend
@@ -29,7 +28,6 @@ class App extends React.Component {
   }
 
   checkUserLoggedIn = async () => {
-    console.log('Checking if user logged in')
     try {
       const { data } = await axios.get(`/api/auth/isUserLoggedIn`)
       this.setUser(data.payload)
@@ -44,7 +42,6 @@ class App extends React.Component {
   }
 
   logoutUser = async () => {
-    console.log('logging out user')
     try {
       await axios.get(`/api/auth/logout`)
       this.setState({
