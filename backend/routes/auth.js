@@ -17,11 +17,18 @@ router.post("/signup", async (req, res, next) => {
     }
 
     let newUser = await userQueries.addNewUser(userInfo)
-    res.json({
-      payload: newUser,
-      msg: "Success adding a new user",
-      err: false
+
+    req.logIn(newUser, err => {
+      if (err) return next(err)
+      res.status(201).json({
+        payload: {
+          user: newUser,
+        },
+        msg: "Success adding a new user",
+        err: false
+      })
     })
+
   } catch (err) {
     console.log(err)
     res.status(500).json({
@@ -35,7 +42,9 @@ router.post("/signup", async (req, res, next) => {
 router.post("/login", passport.authenticate('local'), (req, res, next) => {
   console.log(req.body)
   res.json({
-    payload: req.user,
+    payload: {
+      user: req.user
+    },
     msg: "User successfully logged in",
     err: false
   })

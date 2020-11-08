@@ -19,12 +19,9 @@ class AuthContainer extends Component {
   }
 
   signupUser = async () => {
-    // Make network request to /auth/signup to signup user
-    // then login user
-    console.log('Signingup user')
     try {
-      await axios.post(`/api/auth/signup`, this.state)
-      this.loginUser()
+      const { data } = await axios.post(`/api/auth/signup`, this.state)
+      this.props.setUser(data.payload.user)
 
     } catch (err) {
       console.log('ERROR', err)
@@ -32,13 +29,9 @@ class AuthContainer extends Component {
   }
 
   loginUser = async () => {
-    // Make network request to /auth/login to login user
-    console.log('Logging user')
     try {
       const { data } = await axios.post(`/api/auth/login`, this.state)
-
-      const user = data.payload
-      this.props.setUser(user)
+      this.props.setUser(data.payload.user)
 
     } catch (err) {
       console.log('ERROR', err)
